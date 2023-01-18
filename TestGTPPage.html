@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Test Chat GTP</title>
+  <script type="text/javascript" language="javascript">
+    params = 
+    {
+      "model": "text-davinci-003",
+      "prompt": "",
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "top_p": 1,
+      "n":1,
+      "stop":"None",
+      "frequency_penalty": 0,
+      "presence_penalty": 0
+    }
+
+    function SendChatGPT() {
+      gtpURL = "https://api.openai.com/v1/completions"
+
+      var url = new URL(gtpURL);
+      
+      /*
+      for (let k in params) {
+        url.searchParams.append(k, params[k]);
+      }
+      */
+      console.log(url);
+      //alert(document.getElementById('gptPrompt').value);
+      params.prompt = document.getElementById('gptPrompt').value;
+
+      
+      fetch(url, { method: 'POST', body:params, headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer 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' } })
+        .then(response => response.json())
+        .then(data => 
+          {
+          console.log(data);
+          alert(data);
+          }
+          );
+    }
+
+  </script>
+</head>
+<body>
+
+  <form id="gtpForm">
+    <textarea id="gptPrompt" style="height: 75px; width: 250px; vertical-align:top; align-self:center;">Who was the first person to scuba dive?</textarea>
+    <button onclick="javascript:SendChatGPT()" style="height: 25px; width: 100px; vertical-align:middle; align-self:center;">Send</button>
+  </form>
+
+</body>
+</html>
